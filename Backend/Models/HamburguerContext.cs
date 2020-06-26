@@ -16,7 +16,7 @@ namespace Backend.Models
         public DbSet<UsersHamburguer> UsersHamburguers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=tcp:hamburguer-app.database.windows.net,1433;Initial Catalog=Hamburguer-app;Persist Security Info=False;User ID=db-root;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=tcp:hamburguer-app.database.windows.net,1433;Initial Catalog=Hamburguer-app;Persist Security Info=False;User ID=db-root;Password=Azurelapara123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
     }
 }
