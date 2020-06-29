@@ -2,7 +2,6 @@
 using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Backend.Migrations
@@ -14,15 +13,14 @@ namespace Backend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("Backend.Entities.Models.Hamburguer", b =>
                 {
                     b.Property<int>("HamburguerId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
 
                     b.Property<string>("Image");
 
@@ -40,8 +38,7 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.HamburguersIngredient", b =>
                 {
                     b.Property<int>("HamburguersIngredientId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("HamburguerId");
 
@@ -59,8 +56,7 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.Ingredient", b =>
                 {
                     b.Property<int>("IngredientId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Mesure");
 
@@ -76,8 +72,9 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.Restaurant", b =>
                 {
                     b.Property<int>("RestaurantId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Image");
 
                     b.Property<string>("Name");
 
@@ -89,10 +86,11 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.User", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email");
+
+                    b.Property<string>("LastName");
 
                     b.Property<string>("Name");
 
@@ -105,19 +103,15 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Entities.Models.UsersHamburguer", b =>
                 {
-                    b.Property<int>("UsersHamburguerId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("UserId");
 
                     b.Property<int>("HamburguerId");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UsersHamburguerId");
 
-                    b.HasKey("UsersHamburguerId");
+                    b.HasKey("UserId", "HamburguerId");
 
                     b.HasIndex("HamburguerId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UsersHamburguers");
                 });

@@ -9,9 +9,9 @@ namespace Backend.Entities.Models
     {
         public int  UsersHamburguerId {get;set;}
        public  int  UserId {get;set;}
-       public User User {get;set;}
+       public virtual User User {get;set;}
        public int HamburguerId {get;set;}
-       public Hamburguer Hamburguer {get;set;}
+       public virtual Hamburguer Hamburguer {get;set;}
 
     }
 }

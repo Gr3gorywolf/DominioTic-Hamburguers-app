@@ -9,7 +9,8 @@ namespace Backend.Entities.Models
     {
         public int RestaurantId { get; set; }
         public string Name { get; set; }
-        public List<Hamburguer> Hamburguers { get; set; }
+        public string Image { get; set; }
+        public virtual List<Hamburguer> Hamburguers { get; set; }
 
     }
 }

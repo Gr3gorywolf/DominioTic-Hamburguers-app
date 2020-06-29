@@ -9,9 +9,9 @@ namespace Backend.Entities.Models
     {
         public int HamburguersIngredientId {get;set;}
         public int IngredientId { get; set; }
-        public Ingredient Ingredient { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
 
         public int HamburguerId { get; set; }
-        public Hamburguer Hamburguer { get; set; }
+        public virtual Hamburguer Hamburguer { get; set; }
     }
 }

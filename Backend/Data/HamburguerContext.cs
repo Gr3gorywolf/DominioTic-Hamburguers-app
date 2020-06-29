@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Backend.Data
 {
     public class HamburguerContext : DbContext
@@ -22,12 +21,38 @@ namespace Backend.Data
             if (!optionsBuilder.IsConfigured)
             {
                 //azure
-                optionsBuilder.UseSqlServer("Server=tcp:hamburguer-app.database.windows.net,1433;Initial Catalog=Hamburguer-app;Persist Security Info=False;User ID=db-root;Password=Azurelapara123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                //  optionsBuilder.UseSqlServer("Server=tcp:hamburguer-app.database.windows.net,1433;Initial Catalog=Hamburguer-app;Persist Security Info=False;User ID=db-root;Password=Azurelapara123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 //local
-               // optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlite("Filename=devDB.db");
             }
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Users hamburguers relationship
+            modelBuilder.Entity<UsersHamburguer>()
+                .HasKey(bc => new { bc.UserId, bc.HamburguerId });
+            modelBuilder.Entity<UsersHamburguer>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UsersHamburguers)
+                .HasForeignKey(bc => bc.UserId);
+            modelBuilder.Entity<UsersHamburguer>()
+                .HasOne(bc => bc.Hamburguer)
+                .WithMany(c => c.UsersHamburguers)
+                .HasForeignKey(bc => bc.HamburguerId);
+
+            //Hamburguers restaurant relationship
+            modelBuilder.Entity<Hamburguer>()
+            .HasOne(c => c.Restaurant)
+            .WithMany(e => e.Hamburguers)
+            .IsRequired();
+
+
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 
-   
+
 }

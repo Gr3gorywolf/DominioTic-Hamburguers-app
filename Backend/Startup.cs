@@ -27,8 +27,7 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2); 
-            services.AddDbContext<Data.HamburguerContext>(options =>
-           options.UseSqlServer(Configuration.GetConnectionString("HamburguersDatabase")));
+            services.AddDbContext<Data.HamburguerContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

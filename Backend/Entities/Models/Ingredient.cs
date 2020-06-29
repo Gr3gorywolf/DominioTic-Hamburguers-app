@@ -11,7 +11,7 @@ namespace Backend.Entities.Models
         public string Name { get; set; }
         public int Quantity { get; set; }
         public string Mesure { get; set; }
-        public List<HamburguersIngredient> HamburguersIngredients { get; set; }
+        public virtual List<HamburguersIngredient> HamburguersIngredients { get; set; }
 
     }
 }

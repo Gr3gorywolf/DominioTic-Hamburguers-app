@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Backend.Migrations
 {
@@ -12,7 +11,7 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     IngredientId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     Mesure = table.Column<string>(nullable: true)
@@ -27,8 +26,9 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     RestaurantId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,9 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
@@ -55,9 +56,10 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     HamburguerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     RestaurantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -76,7 +78,7 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     HamburguersIngredientId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     IngredientId = table.Column<int>(nullable: false),
                     HamburguerId = table.Column<int>(nullable: false)
                 },
@@ -101,14 +103,13 @@ namespace Backend.Migrations
                 name: "UsersHamburguers",
                 columns: table => new
                 {
-                    UsersHamburguerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(nullable: false),
-                    HamburguerId = table.Column<int>(nullable: false)
+                    HamburguerId = table.Column<int>(nullable: false),
+                    UsersHamburguerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersHamburguers", x => x.UsersHamburguerId);
+                    table.PrimaryKey("PK_UsersHamburguers", x => new { x.UserId, x.HamburguerId });
                     table.ForeignKey(
                         name: "FK_UsersHamburguers_Hamburguers_HamburguerId",
                         column: x => x.HamburguerId,
@@ -142,11 +143,6 @@ namespace Backend.Migrations
                 name: "IX_UsersHamburguers_HamburguerId",
                 table: "UsersHamburguers",
                 column: "HamburguerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersHamburguers_UserId",
-                table: "UsersHamburguers",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
