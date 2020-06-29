@@ -49,7 +49,7 @@ namespace Backend.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (unitOfWork.Users.Get((ax) => ax.Email == user.Email).First() == null)
+                    if (unitOfWork.Users.Get((ax) => ax.Email == user.Email).FirstOrDefault() == null)
                     {
                         unitOfWork.Users.Insert(user);
                         unitOfWork.Save();
@@ -66,6 +66,36 @@ namespace Backend.Controllers
                     return BadRequest("Los datos introducidos son invalidos");
                 }
             }catch(DataException ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public IActionResult Login([FromBody] User user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var loggedUser = unitOfWork.Users.Get((ax) => ax.Email == user.Email && ax.Password == user.Password).FirstOrDefault();
+                    if (loggedUser != null)
+                    {
+                        return Ok(loggedUser);
+                    }
+                    else
+                    {
+                        return BadRequest("Usuario no existe o correo y contraseña invalida.");
+                    }
+
+                }
+                else
+                {
+                    return BadRequest("Los datos introducidos son invalidos");
+                }
+            }
+            catch (DataException ex)
             {
                 return BadRequest(ex);
             }

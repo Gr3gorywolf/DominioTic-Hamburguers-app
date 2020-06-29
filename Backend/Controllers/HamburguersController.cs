@@ -65,8 +65,6 @@ namespace Backend.Controllers
                     }
 
                     unitOfWork.Hamburguers.Insert(hamburguer);
-                    restaurant.Hamburguers.Add(hamburguer);
-                    unitOfWork.Restaurants.Update(restaurant);
                     unitOfWork.Save();
                     return Created("api/v1/hamburguers/create", hamburguer);
                 }
