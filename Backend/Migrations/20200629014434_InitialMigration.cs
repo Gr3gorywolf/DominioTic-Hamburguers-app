@@ -8,19 +8,6 @@ namespace Backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    CategoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
@@ -33,6 +20,19 @@ namespace Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.IngredientId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Restaurants",
+                columns: table => new
+                {
+                    RestaurantId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Restaurants", x => x.RestaurantId);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,16 +58,16 @@ namespace Backend.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false)
+                    RestaurantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hamburguers", x => x.HamburguerId);
                     table.ForeignKey(
-                        name: "FK_Hamburguers_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
+                        name: "FK_Hamburguers_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -124,9 +124,9 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hamburguers_CategoryId",
+                name: "IX_Hamburguers_RestaurantId",
                 table: "Hamburguers",
-                column: "CategoryId");
+                column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HamburguersIngredients_HamburguerId",
@@ -167,7 +167,7 @@ namespace Backend.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Restaurants");
         }
     }
 }

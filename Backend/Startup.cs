@@ -26,9 +26,9 @@ namespace Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<Models.HamburguerContext>(options =>
-       options.UseSqlServer(Configuration.GetConnectionString("HamburguersDatabase")));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2); 
+            services.AddDbContext<Data.HamburguerContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("HamburguersDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

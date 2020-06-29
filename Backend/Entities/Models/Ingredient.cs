@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Backend.Models
+namespace Backend.Entities.Models
 {
     public class Ingredient
     {
@@ -11,7 +11,6 @@ namespace Backend.Models
         public string Name { get; set; }
         public int Quantity { get; set; }
         public string Mesure { get; set; }
-
         public List<HamburguersIngredient> HamburguersIngredients { get; set; }
 
     }
