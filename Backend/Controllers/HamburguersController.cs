@@ -66,7 +66,7 @@ namespace Backend.Controllers
                      restaurant = unitOfWork.Restaurants.GetByID(hamburguer.RestaurantId);
                     if(restaurant != null)
                     {
-                        hamburguer.RestaurantId = restaurant.RestaurantId;
+                        hamburguer.RestaurantId = restaurant.Id;
                     }
                     else
                     {

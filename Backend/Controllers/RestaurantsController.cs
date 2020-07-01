@@ -28,7 +28,7 @@ namespace Backend.Controllers
         public IActionResult GetRestaurant(int Id)
         {
             var restaurant = unitOfWork.Restaurants.GetByID(Id);
-            restaurant.Hamburguers = unitOfWork.Hamburguers.Get(ax => ax.RestaurantId == restaurant.RestaurantId).ToList();
+            restaurant.Hamburguers = unitOfWork.Hamburguers.Get(ax => ax.RestaurantId == restaurant.Id).ToList();
             if (restaurant != null)
             {
                 return Ok(restaurant);

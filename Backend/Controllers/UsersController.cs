@@ -45,7 +45,7 @@ namespace Backend.Services
             {
                 if (ModelState.IsValid)
                 {
-                    if (unitOfWork.Users.Get((ax) => ax.Email == user.Email).FirstOrDefault() == null)
+                    if (unitOfWork.Users.Get((ax) => ax.Email.Contains(user.Email)).FirstOrDefault() == null)
                     {
                         unitOfWork.Users.Insert(user);
                         unitOfWork.Save();

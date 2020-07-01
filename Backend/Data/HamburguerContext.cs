@@ -55,6 +55,7 @@ namespace Backend.Data
 
 
 
+
             OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
