@@ -10,10 +10,10 @@
 This was designed with asp.net core using the Sql Server database engine for production and Sqlite for local testing
 <br>
 <b><h4>Deployment</h4></b>
-To deploy the backend successfully you must have asp.net core 3.1 and run the following commands
-```bash
+To deploy the backend successfully you must have asp.net core 3.1 and run the following commands <br>
+<code>
 > dotnet ef database update
-```
+</code>
 <b><h4>Test</h4></b>
 You can access to the api by clicking <a href="http://hamburguersapp.azurewebsites.net/">Here</a>
 <b><h4>Docs</h4></b>
