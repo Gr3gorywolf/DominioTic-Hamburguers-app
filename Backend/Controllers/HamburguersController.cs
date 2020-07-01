@@ -63,10 +63,7 @@ namespace Backend.Controllers
                 if (ModelState.IsValid)
                 {
                     Restaurant restaurant = null;
-                    if (hamburguer.RestaurantId != null)
-                    {
-                        restaurant = unitOfWork.Restaurants.GetByID(hamburguer.RestaurantId);
-                    }
+                     restaurant = unitOfWork.Restaurants.GetByID(hamburguer.RestaurantId);
                     if(restaurant != null)
                     {
                         hamburguer.RestaurantId = restaurant.RestaurantId;
