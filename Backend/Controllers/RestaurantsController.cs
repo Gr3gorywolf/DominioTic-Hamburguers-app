@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class RestaurantsController : ControllerBase
     {
@@ -18,18 +18,17 @@ namespace Backend.Controllers
         private UnitOfWork unitOfWork = new UnitOfWork(new HamburguerContext());
 
         [HttpGet]
-        [Route("all")]
-        public IActionResult GetHamburguers()
+        public IActionResult GetRestaurants()
         {
             var restaurants = unitOfWork.Restaurants.Get();
             return Ok(restaurants);
         }
 
-        [HttpGet]
-        [Route("{id}/details")]
-        public IActionResult GetHamburguer(int Id)
+        [HttpGet("{Id}")]
+        public IActionResult GetRestaurant(int Id)
         {
             var restaurant = unitOfWork.Restaurants.GetByID(Id);
+            restaurant.Hamburguers = unitOfWork.Hamburguers.Get(ax => ax.RestaurantId == restaurant.RestaurantId).ToList();
             if (restaurant != null)
             {
                 return Ok(restaurant);
@@ -41,8 +40,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
-        public IActionResult Create([FromBody] Restaurant restaurant)
+        public IActionResult CreateRestaurant([FromBody] Restaurant restaurant)
         {
             try
             {
@@ -64,8 +62,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public IActionResult Update([FromBody] Restaurant restaurant)
+        public IActionResult UpdateRestaurant([FromBody] Restaurant restaurant)
         {
             try
             {
@@ -73,7 +70,7 @@ namespace Backend.Controllers
                 {
                     unitOfWork.Restaurants.Update(restaurant);
                     unitOfWork.Save();
-                    return Ok();
+                    return Ok("Restaurante actualizado exitosamente");
                 }
                 else
                 {
@@ -83,6 +80,22 @@ namespace Backend.Controllers
             catch (DataException ex)
             {
                 return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult DeleteRestaurant(int Id)
+        {
+            var restaurant = unitOfWork.Restaurants.GetByID(Id);
+            if (restaurant != null)
+            {
+                unitOfWork.Restaurants.Delete(restaurant);
+                unitOfWork.Save();
+                return Ok("Restaurant eliminado exitosamente");
+            }
+            else
+            {
+                return NotFound("Restaurant no encontrado");
             }
         }
 

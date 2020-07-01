@@ -8,27 +8,32 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(HamburguerContext))]
-    [Migration("20200629193143_InitialMigration")]
+    [Migration("20200701031309_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("ProductVersion", "3.1.5");
 
             modelBuilder.Entity("Backend.Entities.Models.Hamburguer", b =>
                 {
                     b.Property<int>("HamburguerId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Image");
+                    b.Property<string>("Image")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("RestaurantId");
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("HamburguerId");
 
@@ -40,11 +45,14 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.HamburguersIngredient", b =>
                 {
                     b.Property<int>("HamburguersIngredientId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("HamburguerId");
+                    b.Property<int>("HamburguerId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("IngredientId");
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("HamburguersIngredientId");
 
@@ -58,13 +66,17 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.Ingredient", b =>
                 {
                     b.Property<int>("IngredientId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Mesure");
+                    b.Property<string>("Mesure")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Quantity");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("IngredientId");
 
@@ -74,11 +86,14 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.Restaurant", b =>
                 {
                     b.Property<int>("RestaurantId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Image");
+                    b.Property<string>("Image")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("RestaurantId");
 
@@ -88,15 +103,20 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Entities.Models.User", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId");
 
@@ -105,11 +125,14 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Entities.Models.UsersHamburguer", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("HamburguerId");
+                    b.Property<int>("HamburguerId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<int>("UsersHamburguerId");
+                    b.Property<int>("UsersHamburguerId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("UserId", "HamburguerId");
 
@@ -123,7 +146,8 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Entities.Models.Restaurant", "Restaurant")
                         .WithMany("Hamburguers")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK_Hamburguers_Restaurants_RestaurantId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Entities.Models.HamburguersIngredient", b =>
@@ -131,12 +155,14 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Entities.Models.Hamburguer", "Hamburguer")
                         .WithMany("HamburguersIngredients")
                         .HasForeignKey("HamburguerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Backend.Entities.Models.Ingredient", "Ingredient")
                         .WithMany("HamburguersIngredients")
                         .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Entities.Models.UsersHamburguer", b =>
@@ -144,12 +170,14 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Entities.Models.Hamburguer", "Hamburguer")
                         .WithMany("UsersHamburguers")
                         .HasForeignKey("HamburguerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Backend.Entities.Models.User", "User")
                         .WithMany("UsersHamburguers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

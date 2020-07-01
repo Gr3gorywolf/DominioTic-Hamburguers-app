@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class HamburguersController : ControllerBase
     {
@@ -18,18 +18,17 @@ namespace Backend.Controllers
         private UnitOfWork unitOfWork = new UnitOfWork(new HamburguerContext());
 
         [HttpGet]
-        [Route("all")]
         public IActionResult GetHamburguers()
         {
             var hamburguers = unitOfWork.Hamburguers.Get();
             return Ok(hamburguers);
         }
 
-        [HttpGet]
-        [Route("{id}/details")]
+        [HttpGet("{Id}")]
         public IActionResult GetHamburguer(int Id)
         {
             var hamburguer = unitOfWork.Hamburguers.GetByID(Id);
+            hamburguer.Restaurant = unitOfWork.Restaurants.GetByID(hamburguer.RestaurantId);
             if (hamburguer != null)
             {
                 return Ok(hamburguer);
@@ -40,9 +39,24 @@ namespace Backend.Controllers
             }
         }
 
+        [HttpDelete("{Id}")]
+        public IActionResult DeleteHamburguer(int Id)
+        {
+            var hamburguer = unitOfWork.Hamburguers.GetByID(Id);
+            if (hamburguer != null)
+            {
+                unitOfWork.Hamburguers.Delete(hamburguer);
+                unitOfWork.Save();
+                return Ok("Hamburguer eliminado exitosamente");
+            }
+            else
+            {
+                return NotFound("Hamburguer no encontrado");
+            }
+        }
+
         [HttpPost]
-        [Route("create")]
-        public IActionResult Create([FromBody] Hamburguer hamburguer)
+        public IActionResult CreateHamburguer([FromBody] Hamburguer hamburguer)
         {
             try
             {
@@ -55,9 +69,7 @@ namespace Backend.Controllers
                     }
                     if(restaurant != null)
                     {
-                        hamburguer.Restaurant = restaurant;
                         hamburguer.RestaurantId = restaurant.RestaurantId;
-                       
                     }
                     else
                     {
@@ -80,8 +92,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public IActionResult Update([FromBody] Hamburguer hamburguer)
+        public IActionResult UpdateHamburguer([FromBody] Hamburguer hamburguer)
         {
             try
             {
@@ -89,7 +100,7 @@ namespace Backend.Controllers
                 {
                     unitOfWork.Hamburguers.Update(hamburguer);
                     unitOfWork.Save();
-                    return Ok();
+                    return Ok("Hamburguer actualizado exitosamente");
                 }
                 else
                 {

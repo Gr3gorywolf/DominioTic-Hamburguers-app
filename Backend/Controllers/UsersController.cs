@@ -8,18 +8,16 @@ using Backend.Data;
 using Backend.Services;
 using System.Data;
 
-namespace Backend.Controllers
+namespace Backend.Services
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    [Route("api/v1/[controller]/[action]")]
+    public class UsersController : Controller
     {
       
         private HamburguerContext dbContext = new HamburguerContext();
         private UnitOfWork unitOfWork = new UnitOfWork(new HamburguerContext());
 
-        [HttpGet]
-        [Route("{id}/details")]
+        [HttpGet("{Id}")]
         public IActionResult GetUserDetails(int Id)
         {
             User user = unitOfWork.Users.GetByID(Id);
@@ -35,15 +33,13 @@ namespace Backend.Controllers
 
 
         [HttpGet]
-        [Route("test")]
         public IActionResult Test()
         {
             return Ok("Yeah");
         }
 
         [HttpPost]
-        [Route("create")]
-        public IActionResult Create([FromBody] User user)
+        public IActionResult CreateUser([FromBody] User user)
         {
             try
             {
@@ -72,7 +68,6 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
         public IActionResult Login([FromBody] User user)
         {
             try
@@ -102,7 +97,6 @@ namespace Backend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
         public IActionResult UpdateUser([FromBody] User user)
         {
             try
@@ -111,7 +105,7 @@ namespace Backend.Controllers
                 {
                     unitOfWork.Users.Update(user);
                     unitOfWork.Save();
-                    return Ok();
+                    return Ok("Usuario actualizado exitosamente");
                 }
                 else
                 {
@@ -121,6 +115,22 @@ namespace Backend.Controllers
             catch (DataException ex)
             {
                 return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult DeleteUser(int Id)
+        {
+            var user = unitOfWork.Users.GetByID(Id);
+            if (user != null)
+            {
+                unitOfWork.Users.Delete(user);
+                unitOfWork.Save();
+                return Ok("Usuario eliminado exitosamente");
+            }
+            else
+            {
+                return NotFound("Usuario no encontrado");
             }
         }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace Backend.Data
 {
-    public class HamburguerContext : DbContext
+    public partial class HamburguerContext : DbContext
     {
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Hamburguer> Hamburguers { get; set; }
@@ -30,27 +30,34 @@ namespace Backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Users hamburguers relationship
+           
+
             modelBuilder.Entity<UsersHamburguer>()
                 .HasKey(bc => new { bc.UserId, bc.HamburguerId });
-            modelBuilder.Entity<UsersHamburguer>()
+          /*  modelBuilder.Entity<UsersHamburguer>()
                 .HasOne(bc => bc.User)
                 .WithMany(b => b.UsersHamburguers)
                 .HasForeignKey(bc => bc.UserId);
             modelBuilder.Entity<UsersHamburguer>()
                 .HasOne(bc => bc.Hamburguer)
                 .WithMany(c => c.UsersHamburguers)
-                .HasForeignKey(bc => bc.HamburguerId);
+                .HasForeignKey(bc => bc.HamburguerId)
+                .HasConstraintName("FK_Hamburguers_Restaurants_RestaurantId");*/
 
             //Hamburguers restaurant relationship
             modelBuilder.Entity<Hamburguer>()
             .HasOne(c => c.Restaurant)
             .WithMany(e => e.Hamburguers)
+            .HasForeignKey(e => e.RestaurantId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Hamburguers_Restaurants_RestaurantId")
             .IsRequired();
 
 
 
-            base.OnModelCreating(modelBuilder);
+            OnModelCreatingPartial(modelBuilder);
         }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
     }
 
