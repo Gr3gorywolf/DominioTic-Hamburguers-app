@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="StackLayout"
+             x:Class="HamburguersApp.Pages.Samples.StackLayout">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--First row-->
+            <StackLayout  Orientation="Horizontal" HeightRequest="80">
+                <BoxView BackgroundColor="DeepSkyBlue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                <BoxView BackgroundColor="LightBlue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <!--Second row-->
+            <StackLayout  Orientation="Horizontal" HeightRequest="120">
+                <BoxView BackgroundColor="LightBlue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                <BoxView BackgroundColor="DeepSkyBlue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <!--Third row-->
+            <StackLayout  Orientation="Horizontal" HeightRequest="120" VerticalOptions="FillAndExpand">
+                <BoxView BackgroundColor="SkyBlue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
