@@ -1,4 +1,4 @@
-# Hamburguer app
+# Hamburguer app rest api
 <h3>Contents</h3>
 <li><a href="#about">About hamburguer app</a></li>
 <li><a href="#backend">The backend</a></li> 
@@ -21,7 +21,7 @@ You can see all the application endpoints along with the necessary data by click
 
 <h6 align="center" id="mapp"><img height="128" width="128" src="https://raw.githubusercontent.com/Gr3gorywolf/DominioTic-Hamburguers-app/master/docs/img/cellphone.png"></h6>
 <h3 align="center">The mobile app</h3> <br>
-Coming soon...
+The project is located <a href="https://github.com/Gr3gorywolf/DominioTic-Hamburguers-app">Here</a>
 
 
 
